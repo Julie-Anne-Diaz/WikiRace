@@ -15,7 +15,7 @@ void processText(std::string filepath){
         return false;
     }
     
-    //read txt
+    //read txt and place words that start with -- in a set
     std::string line;
     std::set ism;
     while (std::getline(file, line)) {
@@ -25,6 +25,7 @@ void processText(std::string filepath){
     }
     file.close();
 
+    //UNFINISHED
     //write new file with labeled --
     file.open(filepath);
     std::ofstream newFile;
