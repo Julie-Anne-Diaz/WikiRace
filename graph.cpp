@@ -21,8 +21,8 @@ bool WikiGraph::makeGraph(std::string filepath){
     std::string line;
     std::string cur;
     while (std::getline(file, line)) {
-        if (line.find("-")==0){
-            cur=line;
+        if (line.find("##-")==0){
+            cur=line.substr(3);
         }
         else{
             adj[cur].push_back(line);

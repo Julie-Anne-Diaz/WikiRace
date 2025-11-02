@@ -25,15 +25,18 @@ void processText(std::string filepath){
     }
     file.close();
 
-    //UNFINISHED
     //write new file with labeled --
     file.open(filepath);
     std::ofstream newFile;
-    file.open("new file");
+    newFile.open("new file");
     while (std::getline(file, line)) {
-        if (ism.count(line)){
-            ism.insert(line.substr(1));
+        if (line.find("-"==0 && !ism.count(line))){
+            newFile<<"##"<<line;
+        }
+        else{
+            newFile<<line;
         }
     }
     file.close();
+    newFile.close();
 }
