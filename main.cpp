@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML/Graphics.hpp>
 #incude "graph.hpp"
 
 int main() {
