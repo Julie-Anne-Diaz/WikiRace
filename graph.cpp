@@ -4,7 +4,7 @@
 #include <fstream>
 #include <map>
 #include <iostream>
-#include <stack>
+#include <set>
 #include <queue>
 
 WikiGraph::WikiGraph(){}
@@ -24,7 +24,7 @@ bool WikiGraph::makeGraph(std::string filepath){
     std::string cur;
     while (std::getline(file, line)) {
         if (line==""){
-            std::getline(file, cur)
+            std::getline(file, cur);
         }
         else{
             adj[cur].push_back(line);
@@ -35,8 +35,8 @@ bool WikiGraph::makeGraph(std::string filepath){
 }
 int WikiGraph::BFS(std::string start, std::string end){
     int count = 0;
-    std::stack<std::string> visited;
-    std::queue q;
+    std::set<std::string> visited;
+    std::queue<std::string> q;
     q.push(start);
     while (!q.empty()){
         std::string cur = q.front();

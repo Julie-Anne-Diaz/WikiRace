@@ -1,4 +1,5 @@
-// Online C++ compiler to run C++ program online
+#pragma once
+
 #include <iostream>
 #include <map>
 #include <fstream>

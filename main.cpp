@@ -1,11 +1,12 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#incude "graph.hpp"
+#include "graph.hpp"
+#include <string>
 
 int main() {
-    WikiGraph("filepath");
-    int b = WikiGraph.BFS();
-    int d = WikiGraph.DFS();
+    WikiGraph wiki = WikiGraph("filepath");
+    
+    int b = wiki.BFS("start page", "end page");
+    int d = wiki.DFS("start page", "end page");
     if (b>d){
         std::cout<<"BFS wins with only "<<b<<" traversals compared to DFS's "<<d;
     }
