@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <map>
+#include <unordered_map>
 #include <iostream>
 #include <set>
 #include <queue>
@@ -33,27 +34,33 @@ bool WikiGraph::makeGraph(std::string filepath){
     file.close();
     return true;
 }
-int WikiGraph::BFS(std::string start, std::string end){
-    int count = 0;
-    std::set<std::string> visited;
+std::vector<std::string> WikiGraph::BFS(std::string start, std::string end){
+    std::unordered_map<std::string,std::string> visited;
     std::queue<std::string> q;
     q.push(start);
+    visited[start]="#start()";
+    std::string cur;
     while (!q.empty()){
-        std::string cur = q.front();
+        cur = q.front();
         q.pop();
-        count++;
         if (cur==end){
             break;
         }
         for (std::string s : adj[cur]){
             if (!visited.count(s)){
-                visited.insert(s);
+                visited[s]=cur;
                 q.push(s);
             }
         }
     }
-    return count;
+    std::vector<std::string> path;
+    while(cur!="#start()"){
+        path.insert(path.begin(),cur);
+        cur=visited[cur];
+    }
+    return path;
 }
-int WikiGraph::DFS(std::string start, std::string end){
-    return 0;
+std::vector<std::string> WikiGraph::DFS(std::string start, std::string end){
+    std::vector<std::string> path;
+    return path;
 }

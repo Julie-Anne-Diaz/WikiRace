@@ -12,8 +12,8 @@ public:
     WikiGraph();
     WikiGraph(std::string filepath);
     bool makeGraph(std::string filepath);
-    int BFS(std::string start, std::string end);
-    int DFS(std::string start, std::string end);
+    std::vector<std::string> BFS(std::string start, std::string end);
+    std::vector<std::string> DFS(std::string start, std::string end);
 };
 
 
