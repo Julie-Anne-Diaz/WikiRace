@@ -6,19 +6,32 @@
 #include "graph.hpp"
 
 int main() {
-    WikiGraph wiki = WikiGraph("sampleText.txt");
+    WikiGraph wiki = WikiGraph("C:/Users/Bradley Cederholm/CLionProjects/WikiRace/sampleText.txt");
     std::string displayText;
-    
-    size_t b = wiki.BFS("John Horton Conway", "John von Neumann").size();
-    size_t d = wiki.DFS("John Horton Conway", "John von Neumann").size();
-    if (b > d){
-        displayText = "BFS wins with only " + std::to_string(b) +" traversals compared to DFS's " + std::to_string(d);
+
+    std::vector<std::string> BFSpath = wiki.BFS("Insurance", "Airbus A300");
+    std::vector<std::string> DFSpath = wiki.DFS("Insurance", "Airbus A300");
+
+    size_t b = BFSpath.size();
+    size_t d = DFSpath.size();
+
+    if (b < d) {
+        displayText = "BFS wins with only " + std::to_string(b) +" traversals\ncompared to DFS's " + std::to_string(d);
+        for (std::string s : BFSpath) {
+            displayText += "\n" + s;
+        }
     }
-    else if (b<d){
-        displayText = "DFS wins with only " + std::to_string(d) + " traversals compared to BFS's " + std::to_string(b);
+    else if (b > d) {
+        displayText = "DFS wins with only " + std::to_string(d) + " traversals\ncompared to BFS's " + std::to_string(b);
+        for (std::string s : DFSpath) {
+            displayText += "\n" + s;
+        }
     }
-    else{
+    else {
         displayText = "BFS and DFS tied with " + std::to_string(d) + " traversals";
+        for (std::string s : BFSpath) {
+            displayText += "\n" + s;
+        }
     }
 
     sf::Font font;

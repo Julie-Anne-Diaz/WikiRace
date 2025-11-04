@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+std::string toLower(std::string s);
+
 class WikiGraph{
     std::map<std::string,std::vector<std::string>> adj;
 public:

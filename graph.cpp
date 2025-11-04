@@ -9,6 +9,14 @@
 #include <queue>
 #include <stack>
 
+std::string toLower(std::string s) {
+  std::string output;
+    for(auto x:s){
+        output.push_back(tolower(x));
+    }
+    return output;
+ }
+
 WikiGraph::WikiGraph(){}
 WikiGraph::WikiGraph(std::string filepath){makeGraph(filepath);}
 
@@ -50,7 +58,7 @@ std::vector<std::string> WikiGraph::BFS(std::string start, std::string end){
     while (!q.empty()) {
         cur = q.front();
         q.pop();
-        if (cur==end) {
+        if (toLower(cur)==toLower(end)) {
             break;
         }
         for (std::string s : adj[cur]) {
@@ -72,6 +80,7 @@ std::vector<std::string> WikiGraph::BFS(std::string start, std::string end){
     }
     return path;
 }
+
 std::vector<std::string> WikiGraph::DFS(std::string start, std::string end){
     std::unordered_map<std::string,std::string> visited;
     std::stack<std::string> stk;
@@ -81,7 +90,7 @@ std::vector<std::string> WikiGraph::DFS(std::string start, std::string end){
     while (!stk.empty()) {
         cur = stk.top();
         stk.pop();
-        if (cur==end) {
+        if (toLower(cur)==toLower(end)) {
             break;
         }
         for (std::string s : adj[cur]) {
