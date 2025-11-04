@@ -1,8 +1,9 @@
 #include <iostream>
-#include "graph.hpp"
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+
+#include "graph.hpp"
 
 int main() {
     WikiGraph wiki = WikiGraph("sampleText.txt");
@@ -21,7 +22,7 @@ int main() {
     }
 
     sf::Font font;
-    if (!font.loadFromFile("aovel-sans-rounded-font/AovelSansRounded-rdDL.ttf")) {
+    if (!font.loadFromFile("C:/Users/Bradley Cederholm/CLionProjects/WikiRace/roboto/Roboto-Black.ttf")) {
         std::cerr << "Error loading font" << std::endl;
         return -1;
     }
@@ -30,7 +31,7 @@ int main() {
     text.setFont(font);
     text.setString(displayText);
 
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML Works!");
+    sf::RenderWindow window(sf::VideoMode(600, 400), "Test Window");
     while(window.isOpen()) {
         sf::Event event{};
         while(window.pollEvent(event)) {

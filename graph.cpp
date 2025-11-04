@@ -20,7 +20,7 @@ bool WikiGraph::makeGraph(std::string filepath){
         std::cout<<"problem opening";
         return false;
     }
-    
+
     //read txt
     std::string line;
     std::string cur;
