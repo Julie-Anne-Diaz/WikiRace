@@ -9,7 +9,7 @@
 bool shouldSkip(const std::string &link)
 {
 
-    std::vector<string> skipPrefixes = {
+    std::vector<std::string> skipPrefixes = {
         "File:", "Image:", "Category:", "Help:", "Template:",
         "Wikipedia:", "MediaWiki:", "User:", "Portal:", "Draft:",
         "TimedText:", "Book:", "Education Program:", "Module:",
@@ -29,8 +29,8 @@ bool shouldSkip(const std::string &link)
 int main()
 {
     // avoid weird buffer mismatches
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
 
     const std::string inputFilename = "enwiki-20251001-pages-articles-multistream.xml";
     const std::string outputFilename = "output6.txt";
@@ -42,7 +42,7 @@ int main()
         return 0;
     }
 
-    std::ofstream outfile(outputFilename, ios::app);
+    std::ofstream outfile(outputFilename, std::ios::app);
     if (!outfile.is_open())
     {
         std::cerr << "Error: no output file(?)" << std::endl;
@@ -59,7 +59,7 @@ int main()
     {
         lineCount++;
 
-        if (line.size() > 5'000'000)
+        if (line.size() > 5000000)
         {
             continue;
         }
@@ -86,10 +86,10 @@ int main()
 
         // take out title
         size_t titleStart = line.find("<title>");
-        if (titleStart != string::npos)
+        if (titleStart != std::string::npos)
         {
             size_t titleEnd = line.find("</title>", titleStart);
-            if (titleEnd != string::npos && titleEnd > titleStart)
+            if (titleEnd != std::string::npos && titleEnd > titleStart)
             {
                 currentTitle = line.substr(titleStart + 7, titleEnd - (titleStart + 7));
 
@@ -107,7 +107,7 @@ int main()
 
         // locates anything resembling [[#]], indicates a linked article
         size_t pos = 0;
-        while ((pos = line.find("[[", pos)) != string::npos)
+        while ((pos = line.find("[[", pos)) != std::string::npos)
         {
             size_t end = line.find("]]", pos + 2);
             if (end == std::string::npos)
@@ -115,7 +115,7 @@ int main()
                 break;
             }
 
-            string linkText = line.substr(pos + 2, end - (pos + 2));
+            std::string linkText = line.substr(pos + 2, end - (pos + 2));
             pos = end + 2;
 
             // some [[#]] sections include these lines(|), we can throw them out and the text before them.
@@ -143,6 +143,6 @@ int main()
     infile.close();
     outfile.close();
 
-    cout << "Output complete- stored in: " << outputFilename << endl;
+    std::cout << "Output complete- stored in: " << outputFilename << std::endl;
     return 0;
 }
