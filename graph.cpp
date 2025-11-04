@@ -24,10 +24,16 @@ bool WikiGraph::makeGraph(std::string filepath){
     std::string line;
     std::string cur;
     while (std::getline(file, line)) {
-        if (line==""){
-            std::getline(file, cur);
+        if (line.empty()) {
+            cur.clear();
+            continue;
         }
-        else{
+
+        if (cur.empty()) {
+            cur = line;
+            //make a adj even if there are no links to avoid errors in other places
+            adj[cur] = std::vector<std::string>();
+        } else {
             adj[cur].push_back(line);
         }
     }
@@ -38,25 +44,30 @@ std::vector<std::string> WikiGraph::BFS(std::string start, std::string end){
     std::unordered_map<std::string,std::string> visited;
     std::queue<std::string> q;
     q.push(start);
-    visited[start]="#start()";
+    visited[start] = "";
     std::string cur;
-    while (!q.empty()){
+    while (!q.empty()) {
         cur = q.front();
         q.pop();
-        if (cur==end){
+        if (cur==end) {
             break;
         }
-        for (std::string s : adj[cur]){
+        for (std::string s : adj[cur]) {
             if (!visited.count(s)){
                 visited[s]=cur;
                 q.push(s);
             }
         }
     }
+    //check if no valid path for disconnected articles
+    if (!visited.count(end)) {
+        return {};
+    }
     std::vector<std::string> path;
-    while(cur!="#start()"){
-        path.insert(path.begin(),cur);
-        cur=visited[cur];
+    cur = end;
+    while (cur != "") {
+        path.insert(path.begin(), cur);
+        cur = visited[cur];
     }
     return path;
 }
