@@ -7,6 +7,7 @@
 #include <iostream>
 #include <set>
 #include <queue>
+#include <stack>
 
 WikiGraph::WikiGraph(){}
 WikiGraph::WikiGraph(std::string filepath){makeGraph(filepath);}
@@ -72,6 +73,33 @@ std::vector<std::string> WikiGraph::BFS(std::string start, std::string end){
     return path;
 }
 std::vector<std::string> WikiGraph::DFS(std::string start, std::string end){
+    std::unordered_map<std::string,std::string> visited;
+    std::stack<std::string> stk;
+    stk.push(start);
+    visited[start] = "";
+    std::string cur;
+    while (!stk.empty()) {
+        cur = stk.top();
+        stk.pop();
+        if (cur==end) {
+            break;
+        }
+        for (std::string s : adj[cur]) {
+            if (!visited.count(s)){
+                visited[s]=cur;
+                stk.push(s);
+            }
+        }
+    }
+    //check if no valid path for disconnected articles
+    if (!visited.count(end)) {
+        return {};
+    }
     std::vector<std::string> path;
+    cur = end;
+    while (cur != "") {
+        path.insert(path.begin(), cur);
+        cur = visited[cur];
+    }
     return path;
 }
