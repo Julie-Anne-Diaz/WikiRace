@@ -6,7 +6,7 @@
 #include "graph.hpp"
 
 int main() {
-    WikiGraph wiki = WikiGraph("C:/Users/Bradley Cederholm/CLionProjects/WikiRace/sampleText.txt");
+    WikiGraph wiki = WikiGraph("C:/Users/Bradley Cederholm/CLionProjects/WikiRace/output6.txt");
     std::string displayText;
 
     std::vector<std::string> BFSpath = wiki.BFS("Insurance", "Airbus A300");

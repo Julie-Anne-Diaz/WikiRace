@@ -15,7 +15,7 @@ std::string toLower(std::string s) {
         output.push_back(tolower(x));
     }
     return output;
- }
+}
 
 WikiGraph::WikiGraph(){}
 WikiGraph::WikiGraph(std::string filepath){makeGraph(filepath);}
