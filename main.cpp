@@ -3,7 +3,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
-#include "graph.hpp"
 #include "window.hpp"
 
 int main() {

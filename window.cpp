@@ -2,9 +2,8 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <cstdlib>
+#include "traversals.hpp"
 
-#include "graph.hpp"
 void newText(std::string& s, char uni) {
     s=s.substr(0, s.length()-1);
     if (uni == '\b') // Backspace
@@ -136,7 +135,6 @@ void makeWindow(std::string fontPath, std::string textPath) {
     text2.setPosition(550,25);
     text2.setCharacterSize(15);
 
-    WikiGraph wiki;
     std::vector<std::string> BFSpath;
     std::vector<std::string> DFSpath;
 
