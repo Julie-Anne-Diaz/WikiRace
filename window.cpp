@@ -206,8 +206,9 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     window.draw(ptext1);
                     window.draw(ptext2);
                     window.display();
-                    BFSpath = std::vector<std::string>(); //change to BFS
-                    DFSpath = std::vector<std::string>(); //change to DFS
+                    //variable names are s and e
+                    BFSpath = std::vector<std::string>(); //change to BFS(s,e)
+                    DFSpath = std::vector<std::string>(); //change to DFS(s,e)
                     for (std::string i : BFSpath) {
                         p1+=i+"\n";
                     }
