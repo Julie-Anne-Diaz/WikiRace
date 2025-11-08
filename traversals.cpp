@@ -24,8 +24,7 @@ std::vector<std::string> BFS(const std::vector<BinEntry>& bins, const std::strin
         }
 
         std::string bin = findBinForArticle(bins, cur);
-        std::string line = findArticleLine("../" + bin, cur);
-        std::vector<std::string> neighbors = parseLinks(line);
+        const auto& neighbors = getLinksCached("../" + bin, cur);
 
         for (std::string next : neighbors) {
             if (!visited.count(next)) {
@@ -63,8 +62,7 @@ std::vector<std::string> DFS(const std::vector<BinEntry>& bins, const std::strin
         }
 
         std::string bin = findBinForArticle(bins, cur);
-        std::string line = findArticleLine("../" + bin, cur);
-        std::vector<std::string> neighbors = parseLinks(line);
+        const auto& neighbors = getLinksCached("../" + bin, cur);
 
         for (std::string next : neighbors) {
             if (!visited.count(next)) {

@@ -4,6 +4,9 @@
 #include <iostream>
 #include <fstream>
 
+std::unordered_map<std::string, std::string> binLookup;
+std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::string>>> binCache;
+
 std::string findBinForArticle(const std::vector<BinEntry>& bins, const std::string& title) {
     int low = 0, high = bins.size() - 1;
 
@@ -71,4 +74,34 @@ std::vector<std::string> parseLinks(const std::string& line) {
         links.push_back(line.substr(start));
     }
     return links;
+}
+
+const std::vector<std::string>& getLinksCached(const std::string& binPath, const std::string& title) {
+    // if bin not loaded yet, load entire file
+    if (!binCache.count(binPath)) {
+        std::ifstream fin(binPath);
+        if (!fin.is_open()) {
+            std::cerr << "Failed to open " << binPath << std::endl;
+            static std::vector<std::string> empty;
+            return empty;
+        }
+        std::string line;
+        std::unordered_map<std::string, std::vector<std::string>> articleMap;
+        while (std::getline(fin, line)) {
+            size_t sep = line.find("||");
+            std::string name = (sep == std::string::npos) ? line : line.substr(0, sep);
+            articleMap[name] = parseLinks(line);
+        }
+        binCache[binPath] = std::move(articleMap);
+    }
+
+    // Lookup requested article
+    auto& articleMap = binCache[binPath];
+    auto it = articleMap.find(title);
+    if (it != articleMap.end()) {
+        return it->second;
+    }
+
+    static std::vector<std::string> empty;
+    return empty;
 }
