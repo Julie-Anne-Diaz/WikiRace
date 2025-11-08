@@ -10,6 +10,8 @@
 
 std::vector<std::string> BFS(const std::vector<BinEntry>& bins, const std::string& start, const std::string& end){
 
+    std::cout << start;
+
     std::queue<std::string> q;
     std::unordered_map<std::string, std::string> visited;
 

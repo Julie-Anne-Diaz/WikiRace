@@ -28,6 +28,9 @@ std::string findBinForArticle(const std::vector<BinEntry>& bins, const std::stri
 
 std::vector<BinEntry> loadIndex(const std::string& path) {
     std::ifstream fin(path);
+    if (!fin.is_open()) {
+        std::cout << "Failed to open file " << path << std::endl;
+    }
     std::vector<BinEntry> bins;
     std::string line;
 

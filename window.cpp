@@ -3,6 +3,9 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "traversals.hpp"
+#include "binManagement.hpp"
+
+std::vector<BinEntry> bindex = loadIndex("../bin_index.txt");
 
 void newText(std::string& s, char uni) {
     s=s.substr(0, s.length()-1);
@@ -139,7 +142,7 @@ void makeWindow(std::string fontPath, std::string textPath) {
     std::vector<std::string> DFSpath;
 
     std::string* ptr;
-    sf::RenderWindow window(sf::VideoMode(600, 400), "Test Window");
+    sf::RenderWindow window(sf::VideoMode(600, 400), "Wiki Race");
     while(window.isOpen()) {
         sf::Event event{};
         while(window.pollEvent(event)) {
@@ -165,6 +168,15 @@ void makeWindow(std::string fontPath, std::string textPath) {
             }
             //25 50, 350 50 w=225 h=25
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                if (ptr == &s && !s.empty() && s.back() == '|') {
+                    s.pop_back();
+                    start.setString(s);
+                }
+                else if (ptr == &e && !e.empty() && e.back() == '|') {
+                    e.pop_back();
+                    end.setString(e);
+                }
+
                 if (event.mouseButton.x>25 && event.mouseButton.x<250 && event.mouseButton.y>50 && event.mouseButton.y<75) {
                     ptr = &s;
                     s+="|";
@@ -185,8 +197,8 @@ void makeWindow(std::string fontPath, std::string textPath) {
                         end.setString(e);
                     }
                     ptr=nullptr;
-                    ptext1.setString("loading...");
-                    ptext2.setString("loading...");
+                    ptext1.setString("Loading...");
+                    ptext2.setString("Loading...");
                     button.setString("");
                     arrowtip.setFillColor(sf::Color::White);
                     arrowbutt.setFillColor(sf::Color::White);
@@ -207,8 +219,8 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     window.draw(ptext2);
                     window.display();
                     //variable names are s and e
-                    BFSpath = std::vector<std::string>(); //change to BFS(s,e)
-                    DFSpath = std::vector<std::string>(); //change to DFS(s,e)
+                    BFSpath = BFS(bindex, s, e); //change to BFS(s,e)
+                    DFSpath = DFS(bindex, s, e); //change to DFS(s,e)
                     for (std::string i : BFSpath) {
                         p1+=i+"\n";
                     }
@@ -220,31 +232,23 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     ptext2.setString(p2);
                 }
                 else {
-                    if (ptr==&s) {
-                        s=s.substr(0, s.length()-1);
-                        start.setString(s);
-                    }
-                    else if (ptr==&e) {
-                        e=e.substr(0, e.length()-1);
-                        end.setString(e);
-                    }
                     ptr=nullptr;
                 }
             }
             if (event.type==sf::Event::MouseWheelScrolled ) {
                 if (event.mouseWheelScroll.x>25 && event.mouseWheelScroll.x<275 && event.mouseWheelScroll.y>105 && event.mouseWheelScroll.y<375 ) {
-                    if (ptext1.getGlobalBounds().getPosition().y+ptext1.getGlobalBounds().height>372&&event.mouseWheelScroll.delta<0) {
+                    if (ptext1.getGlobalBounds().top+ptext1.getGlobalBounds().height>372&&event.mouseWheelScroll.delta<0) {
                         ptext1.setPosition(ptext1.getPosition().x,ptext1.getPosition().y+event.mouseWheelScroll.delta);
                     }
-                    if (ptext1.getGlobalBounds().getPosition().y<112&&event.mouseWheelScroll.delta>0) {
+                    if (ptext1.getGlobalBounds().top<112&&event.mouseWheelScroll.delta>0) {
                         ptext1.setPosition(ptext1.getPosition().x,ptext1.getPosition().y+event.mouseWheelScroll.delta);
                     }
                 }
                 else if (event.mouseWheelScroll.x>325 && event.mouseWheelScroll.x<575 && event.mouseWheelScroll.y>105 && event.mouseWheelScroll.y<375 ) {
-                    if (ptext2.getGlobalBounds().getPosition().y+ptext2.getGlobalBounds().height>372&&event.mouseWheelScroll.delta<0) {
+                    if (ptext2.getGlobalBounds().top+ptext2.getGlobalBounds().height>372&&event.mouseWheelScroll.delta<0) {
                         ptext2.setPosition(ptext2.getPosition().x,ptext2.getPosition().y+event.mouseWheelScroll.delta);
                     }
-                    if (ptext2.getGlobalBounds().getPosition().y<112&&event.mouseWheelScroll.delta>0) {
+                    if (ptext2.getGlobalBounds().top<112&&event.mouseWheelScroll.delta>0) {
                         ptext2.setPosition(ptext2.getPosition().x,ptext2.getPosition().y+event.mouseWheelScroll.delta);
                     }
                 }

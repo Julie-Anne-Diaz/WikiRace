@@ -6,6 +6,6 @@
 #include "window.hpp"
 
 int main() {
-    makeWindow("C:/Users/julian.diaz/CLionProjects/WikiRace/roboto/Roboto-Black.ttf", "C:/Users/julian.diaz/CLionProjects/WikiRace/sampleText.txt");
+    makeWindow("../roboto/Roboto-Black.ttf", "../sampleText.txt");
     return 0;
 }
