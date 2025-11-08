@@ -8,8 +8,7 @@
 int main() {
     sf::Font font;
 
-    //EDIT THIS PATH @BMAN
-    if (!font.loadFromFile("C:/Users/julian.diaz/CLionProjects/WikiRace/roboto/Roboto-Black.ttf")) {
+    if (!font.loadFromFile("..\\roboto\\Roboto-Black.ttf")) {
         std::cerr << "Error loading font" << std::endl;
         return -1;
     }
@@ -39,7 +38,6 @@ int main() {
     path.setString("");
     path.setPosition(0,200);
 
-    WikiGraph wiki;
     int count=0;
     std::vector<std::string> BFSpath;
     std::vector<std::string> DFSpath;
@@ -61,7 +59,7 @@ int main() {
                     window.draw(text);
                     window.display();
                     //EDIT THIS PATH BMAN
-                    wiki = WikiGraph("C:/Users/julian.diaz/CLionProjects/WikiRace/sampleText.txt");
+                    wiki = WikiGraph("../sampleText.txt");
                     displayText="input your starting wikipage";
                     text.setString(displayText);
                     count++;

@@ -17,7 +17,7 @@ int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    const std::string inputFilename = "sampleText.txt";
+    const std::string inputFilename = "output8.txt";
     const std::string outputDir = "C:/Users/Bradley Cederholm/CLionProjects/WikiRace/articles/";
     const int BIN_SIZE = 15000;
 
