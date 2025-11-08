@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "traversals.hpp"
 #include "binManagement.hpp"
+#include <ctime>
 
 std::vector<BinEntry> bindex = loadIndex("../bin_index.txt");
 
@@ -209,8 +210,15 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     window.draw(ptext1);
                     window.draw(ptext2);
                     window.display();
+                    double startTime = static_cast<double>(clock());
                     BFSpath = BFS(bindex, s, e); //change to BFS(s,e)
+                    double BFSTime = static_cast<double>(clock());
                     DFSpath = DFS(bindex, s, e); //change to DFS(s,e)
+                    double DFSTime = static_cast<double>(clock())-BFSTime;
+                    BFSTime-=startTime;
+                    std::cout<<"BFS execution time in seconds: "<<BFSTime<<std::endl;
+                    std::cout<<"DFS execution time in seconds: "<<DFSTime<<std::endl;
+                    std::cout<<"BFS executed "<<DFSTime/BFSTime<<" times faster"<<std::endl;
                     for (std::string i : BFSpath) {
                         p1=p1+i+"\n";
                     }
