@@ -25,7 +25,6 @@ void newText(std::string& s, char uni) {
 
 void makeWindow(std::string fontPath, std::string textPath) {
     sf::Font font;
-
     //EDIT THIS PATH @BMAN
     if (!font.loadFromFile(fontPath)) {
         std::cerr << "Error loading font" << std::endl;
@@ -188,14 +187,6 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     end.setString(e);
                 }
                 else if (button.getString()=="start" && event.mouseButton.x>280 && event.mouseButton.x<330 && event.mouseButton.y>50 && event.mouseButton.y<85) {
-                    if (ptr==&s) {
-                        s=s.substr(0, s.length()-1);
-                        start.setString(s);
-                    }
-                    else if (ptr==&e) {
-                        e=e.substr(0, e.length()-1);
-                        end.setString(e);
-                    }
                     ptr=nullptr;
                     ptext1.setString("Loading...");
                     ptext2.setString("Loading...");
@@ -218,16 +209,14 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     window.draw(ptext1);
                     window.draw(ptext2);
                     window.display();
-                    //variable names are s and e
                     BFSpath = BFS(bindex, s, e); //change to BFS(s,e)
                     DFSpath = DFS(bindex, s, e); //change to DFS(s,e)
                     for (std::string i : BFSpath) {
-                        p1+=i+"\n";
+                        p1=p1+i+"\n";
                     }
                     for (std::string i : DFSpath) {
-                        p2+=i+"\n";
+                        p2=p2+i+"\n";
                     }
-                    //15 total lines
                     ptext1.setString(p1);
                     ptext2.setString(p2);
                 }
