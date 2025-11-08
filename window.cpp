@@ -4,7 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "traversals.hpp"
 #include "binManagement.hpp"
-#include <ctime>
+#include <chrono>
+#include <iomanip>
 
 std::vector<BinEntry> bindex = loadIndex("../bin_index.txt");
 
@@ -210,15 +211,25 @@ void makeWindow(std::string fontPath, std::string textPath) {
                     window.draw(ptext1);
                     window.draw(ptext2);
                     window.display();
-                    double startTime = static_cast<double>(clock());
-                    BFSpath = BFS(bindex, s, e); //change to BFS(s,e)
-                    double BFSTime = static_cast<double>(clock());
-                    DFSpath = DFS(bindex, s, e); //change to DFS(s,e)
-                    double DFSTime = static_cast<double>(clock())-BFSTime;
-                    BFSTime-=startTime;
-                    std::cout<<"BFS execution time in seconds: "<<BFSTime<<std::endl;
-                    std::cout<<"DFS execution time in seconds: "<<DFSTime<<std::endl;
-                    std::cout<<"BFS executed "<<DFSTime/BFSTime<<" times faster"<<std::endl;
+                    auto startTime = std::chrono::high_resolution_clock::now();
+                    BFSpath = BFS(bindex, s, e);
+                    auto BFSEnd = std::chrono::high_resolution_clock::now();
+                    DFSpath = DFS(bindex, s, e);
+                    auto DFSEnd = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> bfsDuration = BFSEnd - startTime;
+                    std::chrono::duration<double> dfsDuration = DFSEnd - BFSEnd;
+                    std::cout << std::fixed << std::setprecision(6);
+                    std::cout << "BFS execution time: " << bfsDuration.count() << " seconds\n";
+                    std::cout << "DFS execution time: " << dfsDuration.count() << " seconds\n";
+
+                    if (bfsDuration.count() < dfsDuration.count()) {
+                        double factor = dfsDuration.count() / bfsDuration.count();
+                        std::cout << "BFS was " << std::setprecision(2) << factor << "x faster.\n";
+                    }
+                    else {
+                        double factor = bfsDuration.count() / dfsDuration.count();
+                        std::cout << "DFS was " << std::setprecision(2) << factor << "x faster.\n";
+                    }
                     for (std::string i : BFSpath) {
                         p1=p1+i+"\n";
                     }
