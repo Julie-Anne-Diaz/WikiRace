@@ -3,7 +3,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-#include "graph.hpp"
+#include "traversals.hpp"
+#include "binManagement.hpp"
 
 int main() {
     sf::Font font;
@@ -44,6 +45,7 @@ int main() {
     int pos=0;
 
     sf::RenderWindow window(sf::VideoMode(600, 400), "Test Window");
+    std::vector<BinEntry> bindex = loadIndex("../bin_index.txt");
     while(window.isOpen()) {
         sf::Event event{};
         while(window.pollEvent(event)) {
@@ -58,8 +60,6 @@ int main() {
                     window.clear();
                     window.draw(text);
                     window.display();
-                    //EDIT THIS PATH BMAN
-                    wiki = WikiGraph("../sampleText.txt");
                     displayText="input your starting wikipage";
                     text.setString(displayText);
                     count++;
@@ -107,8 +107,8 @@ int main() {
                         window.draw(end);
                         window.display();
 
-                        BFSpath=wiki.BFS(s, e);
-                        DFSpath=wiki.DFS(s, e);
+                        BFSpath=BFS(bindex, s, e);
+                        DFSpath=DFS(bindex, s, e);
                         size_t b = BFSpath.size();
                         size_t d = DFSpath.size();
 

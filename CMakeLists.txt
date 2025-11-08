@@ -9,6 +9,7 @@ set(SFML_DIR "C:/Users/Bradley Cederholm/CLionProjects/WikiRace/SFML-2.5.1/lib/c
 find_package(SFML 2.5.1 COMPONENTS system window graphics audio REQUIRED)
 add_executable(WikiRace
         main.cpp
-        graph.cpp
+        traversals.cpp
+        binManagement.cpp
 )
 target_link_libraries(WikiRace sfml-system sfml-window sfml-graphics sfml-audio)
